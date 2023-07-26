@@ -50,5 +50,5 @@ jobs:
         generateReleaseNotes: true
         name: Catskua ${{ github.ref_name }}
         tag: ${{ github.ref_name }}
-        artifacts: ['build/app/outputs/apk/release/*.apk', 'build/app/outputs/ios/release/*.apk']
+        artifacts: "build/app/outputs/apk/release/*.apk,build/app/outputs/ios/release/*.apk"
         replacesArtifacts: true
