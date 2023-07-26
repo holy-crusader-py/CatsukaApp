@@ -1,3 +1,4 @@
+import 'package:file/src/interface/file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
@@ -31,7 +32,8 @@ class CatsukaApp extends StatelessWidget {
     );
 
     return GetMaterialApp(
-      theme: ThemeData.dark().copyWith(
+      theme: ThemeData(
+        fontFamily: 'Exo 2',
         scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       initialRoute: '/',
@@ -113,16 +115,28 @@ class Home extends StatelessWidget {
     List<Widget> news = [];
     Uri uri = Uri.parse('https://feeds.feedburner.com/catsuka-news');
 
-    FileInfo? cacheInfos =
-        await DefaultCacheManager().getFileFromCache(uri.toString());
+    File cacheFile = await DefaultCacheManager().getSingleFile(uri.toString());
 
-    if (cacheInfos == null) {
-      return [const Text("Failed to load news")];
+    if (!cacheFile.existsSync()) {
+      return [
+        const Padding(
+          padding: EdgeInsets.only(top: 50),
+          child: Center(
+            child: Text(
+              "Sorry, we failed to load news...",
+              style: TextStyle(
+                color: Color(0xffe04a25),
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
+        ),
+      ];
     }
-
     final transformer = Xml2Json();
 
-    transformer.parse(await cacheInfos.file.openRead().bytesToString());
+    transformer.parse(await cacheFile.openRead().bytesToString());
     var data = jsonDecode(transformer.toOpenRally())["rss"]["channel"]["item"];
 
     const start = '<img src=\\"';
