@@ -49,6 +49,7 @@ class ShortWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
+                              color: Colors.white,
                             fontFamily: "Exo 2",
                           ),
                         ),
@@ -56,7 +57,7 @@ class ShortWidget extends StatelessWidget {
                       Transform.translate(
                         offset: const Offset(-1, 0),
                         child: SvgPicture.asset(
-                            "assets/images/orange_triangle.svg"),
+                            "assets/images/orange_triangle.svg",),
                       ),
                     ],
                   ),
