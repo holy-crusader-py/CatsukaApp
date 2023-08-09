@@ -45,7 +45,7 @@ class ShortWidget extends StatelessWidget {
                           color: Color(0xffdc4520),
                         ),
                         child: const Text(
-                          'News',
+                          'Brève',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
