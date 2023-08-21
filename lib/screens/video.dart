@@ -68,7 +68,7 @@ class _Video extends State<Video> {
 
   Future<List<Widget>> getVideos({bool reload = false}) async {
     List<Widget> videos = [];
-    Uri uri = Uri.parse('https://feeds.feedburner.com/catsuka-news');
+    Uri uri = Uri.parse('https://feeds.feedburner.com/catsuka-player');
 
     if (reload) {
       DefaultCacheManager().removeFile(uri.toString());
@@ -102,22 +102,23 @@ class _Video extends State<Video> {
     const end = '\\"';
 
     for (var item in data) {
+      // imageUrl
       final str = item['description'];
       final startIndex = str.indexOf(start);
       final endIndex = str.indexOf(end, startIndex + start.length);
 
+      final String imageUrl =
+          str.substring(startIndex + start.length, endIndex).trim();
+      // Date
       await Jiffy.setLocale('en');
       final jiffy = Jiffy.parse(
-        item["pubDate"].substring(5, 25),
-        pattern: 'dd MMM yyyy hh:mm:ss',
+        item["pubDate"].substring(0, 10),
+        pattern: 'yyyy-MM-dd',
       );
 
       await Jiffy.setLocale('fr');
-      String date = jiffy.format(pattern: 'EEEE, dd MMMM HH[h]mm');
+      String date = jiffy.format(pattern: 'EEEE, dd MMMM');
       date = date[0].toUpperCase() + date.substring(1);
-
-      final String imageUrl =
-          str.substring(startIndex + start.length, endIndex).trim();
 
       videos.add(
         VideoWidget(

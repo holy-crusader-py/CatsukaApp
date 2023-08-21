@@ -1,3 +1,4 @@
+import 'package:catsuka/screens/player.dart';
 import 'package:file/file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,6 +48,12 @@ class CatsukaApp extends StatelessWidget {
           name: '/video',
           page: () => const Screen(navBarIndex: 1, child: Video()),
           transition: Transition.noTransition,
+        ),
+        GetPage(
+          name: '/player',
+          page: () => const Screen(navBarIndex: 1, child: Player()),
+          transition: Transition.cupertino,
+          transitionDuration: const Duration(milliseconds: 200),
         ),
         GetPage(
           name: '/news',
