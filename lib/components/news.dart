@@ -106,7 +106,11 @@ class NewsWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  unescape.convert(description.split("<br />")[0]),
+                  unescape
+                      .convert(description.split("<br />")[0])
+                      .replaceAll("\\n", " ")
+                      .replaceAll("\\r", " ")
+                      .replaceAll("\\", " "),
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
