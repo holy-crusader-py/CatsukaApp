@@ -1,4 +1,4 @@
-import 'package:file/src/interface/file.dart';
+import 'package:file/file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
@@ -40,7 +40,7 @@ class CatsukaApp extends StatelessWidget {
       getPages: [
         GetPage(
           name: '/',
-          page: () => const Screen(navBarIndex: 0, child: Home()),
+          page: () => Screen(navBarIndex: 0, child: Home()),
           transition: Transition.noTransition,
         ),
         GetPage(
@@ -82,38 +82,70 @@ class Screen extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _Home();
+}
+
+class _Home extends State<Home> {
+  late Future<List<Widget>> futureNews;
+
+  @override
+  void initState() {
+    super.initState();
+    futureNews = getNews();
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Widget>>(
-      future: getNews(),
+      future: futureNews,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasData) {
-          return MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              padding: const EdgeInsets.only(top: 100),
-              children: snapshot.data,
-            ),
-          );
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: Color(0xffe04a25),
-            ),
-          );
-        }
+        return RefreshIndicator(
+          onRefresh: () async {
+            List<Widget> freshNews = await getNews(reload: true);
+            setState(() {
+              futureNews = Future.value(freshNews);
+            });
+          },
+          edgeOffset: 100,
+          color: const Color(0xffe04a25),
+          backgroundColor: const Color(0xFF122E39),
+          child: _listView(context, snapshot),
+        );
       },
     );
   }
 
-  Future<List<Widget>> getNews() async {
+  Widget _listView(BuildContext context, AsyncSnapshot snapshot) {
+    if (snapshot.hasData) {
+      return MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: ListView(
+          scrollDirection: Axis.vertical,
+          padding: const EdgeInsets.only(top: 100),
+          children: snapshot.data,
+        ),
+      );
+    } else {
+      return const Center(
+        child: CircularProgressIndicator(
+          color: Color(0xffe04a25),
+        ),
+      );
+    }
+  }
+
+  Future<List<Widget>> getNews({bool reload = false}) async {
     List<Widget> news = [];
     Uri uri = Uri.parse('https://feeds.feedburner.com/catsuka-news');
+
+    if (reload) {
+      DefaultCacheManager().removeFile(uri.toString());
+    }
 
     File cacheFile = await DefaultCacheManager().getSingleFile(uri.toString());
 
