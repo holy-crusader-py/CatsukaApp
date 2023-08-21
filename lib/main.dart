@@ -40,7 +40,7 @@ class CatsukaApp extends StatelessWidget {
       getPages: [
         GetPage(
           name: '/',
-          page: () => Screen(navBarIndex: 0, child: Home()),
+          page: () => const Screen(navBarIndex: 0, child: Home()),
           transition: Transition.noTransition,
         ),
         GetPage(
