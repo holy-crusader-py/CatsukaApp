@@ -112,8 +112,8 @@ class _Video extends State<Video> {
       // Date
       await Jiffy.setLocale('en');
       final jiffy = Jiffy.parse(
-        item["pubDate"].substring(0, 10),
-        pattern: 'yyyy-MM-dd',
+        item["pubDate"].substring(5, 16),
+        pattern: 'dd MMMM yyyy',
       );
 
       await Jiffy.setLocale('fr');
