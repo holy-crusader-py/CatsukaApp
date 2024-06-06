@@ -93,14 +93,14 @@ class ShortWidget extends StatelessWidget {
                           },
                           style: const ButtonStyle(
                             backgroundColor:
-                                MaterialStatePropertyAll(Color(0xFF122E39)),
-                            padding: MaterialStatePropertyAll(
+                                WidgetStatePropertyAll(Color(0xFF122E39)),
+                            padding: WidgetStatePropertyAll(
                               EdgeInsets.symmetric(
                                 horizontal: 10,
                                 vertical: 7,
                               ),
                             ),
-                            shape: MaterialStatePropertyAll(
+                            shape: WidgetStatePropertyAll(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.zero,
                               ),

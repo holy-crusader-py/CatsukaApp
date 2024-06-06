@@ -43,29 +43,36 @@ class CatsukaApp extends StatelessWidget {
           name: '/',
           page: () => const Screen(navBarIndex: 0, child: Home()),
           transition: Transition.noTransition,
+          children: [
+            GetPage(
+              name: '/breve',
+              page: () => const Screen(navBarIndex: 0, child: Breve()),
+              transition: Transition.cupertino,
+              transitionDuration: const Duration(milliseconds: 200),
+              popGesture: true,
+            ),
+            GetPage(
+              name: '/news',
+              page: () => const Screen(navBarIndex: 0, child: News()),
+              transition: Transition.cupertino,
+              transitionDuration: const Duration(milliseconds: 200),
+              popGesture: true,
+            ),
+          ]
         ),
         GetPage(
           name: '/video',
           page: () => const Screen(navBarIndex: 1, child: Video()),
           transition: Transition.noTransition,
-        ),
-        GetPage(
-          name: '/player',
-          page: () => const Screen(navBarIndex: 1, child: Player()),
-          transition: Transition.cupertino,
-          transitionDuration: const Duration(milliseconds: 200),
-        ),
-        GetPage(
-          name: '/news',
-          page: () => const Screen(navBarIndex: 0, child: News()),
-          transition: Transition.cupertino,
-          transitionDuration: const Duration(milliseconds: 200),
-        ),
-        GetPage(
-          name: '/breve',
-          page: () => const Screen(navBarIndex: 0, child: Breve()),
-          transition: Transition.cupertino,
-          transitionDuration: const Duration(milliseconds: 200),
+          children: [
+            GetPage(
+              name: '/player',
+              page: () => const Screen(navBarIndex: 1, child: Player()),
+              transition: Transition.cupertino,
+              transitionDuration: const Duration(milliseconds: 200),
+              popGesture: true,
+            ),
+          ],
         ),
       ],
     );

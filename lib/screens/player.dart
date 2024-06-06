@@ -77,39 +77,39 @@ class Player extends StatelessWidget {
       },
     );
 
-    // Tags
-    late List<Tag> tags = [];
-    videosInfos.querySelectorAll('div.videosinfos_left > a').forEach((e) {
-      tags.add(Tag(e.querySelector("u")!.text, e.attributes['href']!));
-    });
+    // // Tags
+    // late List<Tag> tags = [];
+    // videosInfos.querySelectorAll('div.videosinfos_left > a').forEach((e) {
+    //   tags.add(Tag(e.querySelector("u")!.text, e.attributes['href']!));
+    // });
 
     List<Widget> tagsWidget = [];
 
-    for (Tag tag in tags) {
-      tagsWidget.add(
-        GestureDetector(
-          onTap: () async {
-            _launchUrl(tag.link);
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-            decoration: BoxDecoration(
-              color: const Color(0xFF122E39),
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Text(
-              tag.name,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                fontFamily: "Exo 2",
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-      );
-    }
+    // for (Tag tag in tags) {
+    //   tagsWidget.add(
+    //     GestureDetector(
+    //       onTap: () async {
+    //         _launchUrl(tag.link);
+    //       },
+    //       child: Container(
+    //         padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+    //         decoration: BoxDecoration(
+    //           color: const Color(0xFF122E39),
+    //           borderRadius: BorderRadius.circular(5),
+    //         ),
+    //         child: Text(
+    //           tag.name,
+    //           style: const TextStyle(
+    //             fontSize: 12,
+    //             fontWeight: FontWeight.w700,
+    //             fontFamily: "Exo 2",
+    //             color: Colors.white,
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   );
+    // }
 
     return ListView(
       scrollDirection: Axis.vertical,
