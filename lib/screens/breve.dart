@@ -1,11 +1,12 @@
+import 'package:catsuka/api/short.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:http/http.dart';
-import 'package:html/parser.dart';
-import 'package:html/dom.dart' as dom;
+
+import '../components/read_on_website_button.dart';
+import '../utils/tools.dart';
 
 class Breve extends StatelessWidget {
   const Breve({super.key});
@@ -35,27 +36,10 @@ class Breve extends StatelessWidget {
   }
 
   Future<Widget> getNews(String link, dynamic date) async {
-    var client = Client();
-    Response response = await client.get(Uri.parse(link));
+    BreveObject breve = await fetchBreve(link);
+    List<Widget> breveWidget = [];
 
-    if (response.statusCode != 200) {
-      return const Text("Error", style: TextStyle(color: Colors.red));
-    }
-
-    var document = parse(response.body);
-
-    dom.Element content = document.querySelectorAll('div.zoneintro')[0];
-    String title = content
-        .querySelector('div.cadremenudroitgrisclair > div > a > b')!
-        .text;
-    String imageUrl =
-        "https://www.catsuka.com/${content.querySelectorAll('div.cadremenudroitgrisclair > img[width="250"]')[0].attributes['src']!}";
-
-    dom.Element newsContainer =
-        content.getElementsByClassName("txtnoir14").first;
-    List<Widget> newsWidget = [];
-
-    for (var item in newsContainer.innerHtml.split('<br>')) {
+    for (var item in breve.content) {
       if (item.contains('blockquote')) {
         continue;
       } else if (item.contains('<b>English audience</b>')) {
@@ -65,7 +49,7 @@ class Breve extends StatelessWidget {
       }
 
       if (item.trim().isNotEmpty) {
-        newsWidget.add(
+        breveWidget.add(
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: HtmlWidget(
@@ -77,7 +61,7 @@ class Breve extends StatelessWidget {
                 return null;
               },
               onTapUrl: (url) {
-                _launchUrl(url);
+                UrlLauncher.launch(url);
                 return true;
               },
               textStyle: const TextStyle(
@@ -91,43 +75,7 @@ class Breve extends StatelessWidget {
       }
     }
 
-    newsWidget.add(TextButton(
-      onPressed: () {
-        _launchUrl(link);
-      },
-      style: const ButtonStyle(
-        backgroundColor: WidgetStatePropertyAll(Color(0xFF122E39)),
-        padding: WidgetStatePropertyAll(
-          EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 7,
-          ),
-        ),
-        shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.zero,
-          ),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SvgPicture.asset(
-            "assets/images/forward_triangle.svg",
-          ),
-          const SizedBox(width: 10),
-          const Text(
-            "Lire sur le site",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w800,
-              fontFamily: "Exo 2",
-              color: Color(0xFFFFFFFF),
-            ),
-          ),
-        ],
-      ),
-    ));
+    breveWidget.add(ReadOnWebsiteButton(link: link,));
 
     return ListView(
       scrollDirection: Axis.vertical,
@@ -139,7 +87,7 @@ class Breve extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                title,
+                breve.title,
                 style: const TextStyle(
                   fontSize: 20,
                   color: Colors.black,
@@ -160,23 +108,17 @@ class Breve extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Center(
-          child: Image.network(width: double.infinity, imageUrl),
+          child: Image.network(width: double.infinity, breve.imageUrl),
         ),
         const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
           child: Column(
-            children: newsWidget,
+            children: breveWidget,
           ),
         ),
         // testHtml
       ],
     );
-  }
-}
-
-Future<void> _launchUrl(String url) async {
-  if (!await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication)) {
-    throw Exception('Could not launch $url');
   }
 }
