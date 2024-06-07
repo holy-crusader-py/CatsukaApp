@@ -5,6 +5,7 @@ import 'package:html_unescape/html_unescape.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../utils/dotted_horizontal_line.dart';
+import 'post_type.dart';
 
 class NewsWidget extends StatelessWidget {
   final String title;
@@ -38,33 +39,7 @@ class NewsWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 3,
-                          ),
-                          decoration: const BoxDecoration(
-                            color: Color(0xffdc4520),
-                          ),
-                          child: const Text(
-                            'News',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
-                              fontFamily: "Exo 2",
-                            ),
-                          ),
-                        ),
-                        Transform.translate(
-                          offset: const Offset(-1, 0),
-                          child: SvgPicture.asset(
-                              "assets/images/orange_triangle.svg"),
-                        ),
-                      ],
-                    ),
+                    const PostTypeTag(type: "News"),
                     Text(
                       date,
                       style: const TextStyle(
