@@ -13,9 +13,11 @@ import 'components/app_bar.dart';
 import 'components/nav_bar.dart';
 import 'components/short.dart';
 import 'components/news.dart';
+import 'components/update_dialog.dart';
 import 'screens/video.dart';
 import 'screens/news.dart';
 import 'screens/breve.dart';
+import 'utils/update_manager.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -105,31 +107,42 @@ class Home extends StatefulWidget {
 
 class _Home extends State<Home> {
   late Future<List<Widget>> futureNews;
+  late Future<bool> update;
 
   @override
   void initState() {
     super.initState();
     futureNews = getNews();
+    update = checkForUpdate();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Widget>>(
-      future: futureNews,
+    return FutureBuilder(
+      future: update,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        return RefreshIndicator(
-          onRefresh: () async {
-            List<Widget> freshNews = await getNews(reload: true);
-            setState(() {
-              futureNews = Future.value(freshNews);
-            });
+        update.then((result) {
+          if (result) Overlay.of(context).insert(updateDialog());
+        });
+
+        return FutureBuilder<List<Widget>>(
+          future: futureNews,
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            return RefreshIndicator(
+              onRefresh: () async {
+                List<Widget> freshNews = await getNews(reload: true);
+                setState(() {
+                  futureNews = Future.value(freshNews);
+                });
+              },
+              edgeOffset: 100,
+              color: const Color(0xffe04a25),
+              backgroundColor: const Color(0xFF122E39),
+              child: _listView(context, snapshot),
+            );
           },
-          edgeOffset: 100,
-          color: const Color(0xffe04a25),
-          backgroundColor: const Color(0xFF122E39),
-          child: _listView(context, snapshot),
         );
-      },
+      }
     );
   }
 
