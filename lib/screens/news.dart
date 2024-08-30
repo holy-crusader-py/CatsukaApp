@@ -1,6 +1,6 @@
 import 'package:catsuka/api/news.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+// import 'package:flutter_svg/svg.dart';
 
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 

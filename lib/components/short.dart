@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 
 import 'package:html_unescape/html_unescape.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -64,7 +64,7 @@ class ShortWidget extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            Get.toNamed('/breve', arguments: [link, date]);
+                            // Get.toNamed('/breve', arguments: [link, date]);
                           },
                           style: const ButtonStyle(
                             backgroundColor:

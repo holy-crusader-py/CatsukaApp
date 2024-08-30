@@ -5,6 +5,7 @@ import 'package:xml2json/xml2json.dart';
 import 'dart:convert';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:get/get.dart';
 
 import '../components/short.dart';
 import '../components/news.dart';
@@ -129,27 +130,37 @@ class _Home extends State<Home> {
       await Jiffy.setLocale('fr');
       String date = jiffy.format(pattern: 'EEEE, dd MMMM HH[h]mm');
       date = date[0].toUpperCase() + date.substring(1);
+      String link = item['link'];
+
+      Widget postWidget;
+      String linkPage = "news";
 
       if (item["title"].indexOf('(Brève)') == -1) {
-        news.add(
-          NewsWidget(
+        postWidget = NewsWidget(
             title: item["title"],
             description: item["description"],
             imageUrl: str.substring(startIndex + start.length, endIndex).trim(),
             date: date,
-            link: item["link"],
-          ),
-        );
+            link: link,
+          );
       } else {
-        news.add(
-          ShortWidget(
+        postWidget = ShortWidget(
             title: item["title"].replaceAll('(Brève)', '').trim(),
             imageUrl: str.substring(startIndex + start.length, endIndex).trim(),
             date: date,
-            link: item["link"],
-          ),
-        );
+            link: link,
+          );
+        
+        linkPage = "breve";
       }
+
+      news.add(
+        GestureDetector(
+          onTap: () {
+            Get.toNamed('/$linkPage', arguments: <String>[link, date]);
+          },
+          child: postWidget,)
+        );
     }
     news.add(
       Center(

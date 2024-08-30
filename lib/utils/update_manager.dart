@@ -26,6 +26,8 @@ Future<bool> checkForUpdate() async {
   String latestVersion = await fetchLatestVersion();
   String currentVersion = packageInfo.version;
 
+  return false;
+
   return latestVersion != currentVersion;
 }
 

@@ -12,7 +12,7 @@ Future<BreveObject> fetchBreve(String link) async {
 
   var document = parse(response.body);
 
-  dom.Element content = document.querySelectorAll('div.zoneintro')[0];
+  dom.Element content = document.querySelectorAll('div.zoneintro').last;
   String title = content
       .querySelector('div.cadremenudroitgrisclair > div > a > b')!
       .text;

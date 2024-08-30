@@ -1,9 +1,9 @@
 import 'package:catsuka/api/short.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+// import 'package:flutter_svg/svg.dart';
 
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 import '../components/read_on_website_button.dart';
 import '../utils/tools.dart';

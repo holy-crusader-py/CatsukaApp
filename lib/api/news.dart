@@ -9,10 +9,10 @@ Future<NewsObject> fetchNews(String link) async {
   if (response.statusCode != 200) {
     return NewsObject.empty();
   }
-
+  
   var document = parse(response.body);
 
-  dom.Element content = document.querySelectorAll('div.zoneintro')[0];
+  dom.Element content = document.querySelectorAll('div.zoneintro').last;
   String title = content.querySelector('div.newsinfos_desktop > a > b')!.text;
   String subtitle =
       content.querySelector('div.newsinfos_desktop > span.txtnoir17')!.text;
@@ -21,6 +21,7 @@ Future<NewsObject> fetchNews(String link) async {
 
   dom.Element newsContainer =
       content.getElementsByClassName("txtnoir14").first;
+  
   
   return NewsObject(
     title: title,

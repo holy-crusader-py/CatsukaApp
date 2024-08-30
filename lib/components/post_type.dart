@@ -36,7 +36,6 @@ class PostTypeTag extends StatelessWidget {
           offset: const Offset(-1, 0),
           child: SvgPicture.asset(
               "assets/images/orange_triangle.svg",
-              height: 26.0,
               ),
         ),
       ],

@@ -18,7 +18,7 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName', '1.0
 android {
     namespace "fr.catsuka.app"
     compileSdkVersion flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+    ndkVersion "26.1.10909125"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 
 import 'package:html_unescape/html_unescape.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -95,7 +95,7 @@ class NewsWidget extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    Get.toNamed('/news', arguments: [link, date]);
+                    // Get.toNamed('/news', arguments: [link, date]);
                   },
                   style: const ButtonStyle(
                     backgroundColor:
