@@ -52,6 +52,7 @@ dependencies:
   file: ^7.0.0
   ota_update: ^6.0.0
   package_info_plus: ^8.0.0
+  video_player_android: ^2.7.2
 
 dependency_overrides:
   just_audio:
