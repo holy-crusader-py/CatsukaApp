@@ -27,7 +27,7 @@ jobs:
         channel: "stable"
     
     - name: Get dependencies
-      run: flutter pub get --info
+      run: flutter pub get
 
     - name: Build Android App Bundle
       run: flutter build apk --release --split-per-abi
