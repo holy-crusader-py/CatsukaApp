@@ -45,14 +45,13 @@ dependencies:
   html_unescape: ^2.0.0
   html: ^0.15.4
   flutter_html: ^3.0.0-beta.2
-  flutter_widget_from_html: ^0.15.0
+  flutter_widget_from_html: ^0.10.3
   get: ^4.6.6
   flutter_cache_manager: ^3.3.1
   jiffy: ^6.2.1
   file: ^7.0.0
   ota_update: ^6.0.0
   package_info_plus: ^8.0.0
-  video_player_android: ^2.7.2
 
 dependency_overrides:
   just_audio:
