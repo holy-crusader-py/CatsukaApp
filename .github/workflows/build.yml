@@ -27,10 +27,10 @@ jobs:
         channel: "stable"
     
     - name: Get dependencies
-      run: flutter pub get
+      run: flutter pub get --info
 
     - name: Build Android App Bundle
-      run: flutter build apk --release --split-per-abi --info
+      run: flutter build apk --release --split-per-abi
 
     - name: Sign app APK
       id: sign_app
