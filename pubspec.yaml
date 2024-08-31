@@ -52,6 +52,11 @@ dependencies:
   file: ^7.0.0
   ota_update: ^6.0.0
   package_info_plus: ^8.0.0
+  just_audio:
+    git:
+      url: https://github.com/Princeyyyy/just_audio/
+      branch: master
+      path: just_audio
 
 dev_dependencies:
   flutter_test:
